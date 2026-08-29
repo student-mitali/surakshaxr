@@ -1,0 +1,105 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #08121e;
+  color: white;
+}
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: linear-gradient(135deg, #08121e, #12344a);
+}
+
+.card {
+  width: 100%;
+  max-width: 500px;
+  padding: 30px;
+  border-radius: 20px;
+  background: #122a3d;
+  box-shadow: 0 20px 40px #0005;
+}
+
+.tag {
+  color: #19c6b7;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+h1 {
+  font-size: 32px;
+}
+
+h2 {
+  line-height: 1.4;
+}
+
+p {
+  color: #b1c7d2;
+  line-height: 1.6;
+}
+
+label {
+  display: block;
+  margin-top: 20px;
+  margin-bottom: 8px;
+}
+
+select,
+button {
+  width: 100%;
+  padding: 14px;
+  margin-top: 12px;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+}
+
+select {
+  background: white;
+}
+
+button {
+  cursor: pointer;
+}
+
+.primary-button {
+  background: #19c6b7;
+  color: #08121e;
+  font-weight: bold;
+}
+
+.module-button,
+.option-button {
+  background: #203f55;
+  color: white;
+  text-align: left;
+}
+
+.fire {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 120px;
+  font-size: 70px;
+}
+
+.feedback {
+  margin-top: 20px;
+  padding: 15px;
+  border-radius: 10px;
+  background: #0b1c2b;
+}
+
+.result-card {
+  text-align: center;
+}
+
+.score {
+  font-size: 70px;
+  color: #19c6b7;
+  font-weight: bold;
+}
