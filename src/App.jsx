@@ -301,6 +301,30 @@ function App() {
             }}
           ></div>
         </div>
+        <div className="scenario-visual">
+  <div className="visual-header">
+    INDUSTRIAL WORK AREA / SIMULATION
+  </div>
+
+  <div className="visual-floor">
+    <div className="visual-hazard">
+      <span>HAZARD</span>
+      FIRE ZONE
+    </div>
+
+    <div className="visual-exit safe-exit">
+      SAFE EXIT A
+    </div>
+
+    <div className="visual-exit blocked-exit">
+      BLOCKED EXIT
+    </div>
+
+    <div className="visual-muster">
+      MUSTER POINT
+    </div>
+  </div>
+</div>
 
         <div className="scenario-context">
           <span>INCIDENT SCENARIO</span>

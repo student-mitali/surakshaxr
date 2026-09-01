@@ -602,3 +602,98 @@ select:focus-visible {
     transition-duration: 0.01ms !important;
   }
 }
+.scenario-visual {
+  margin: 28px 0;
+  overflow: hidden;
+  border: 1px solid #31576a;
+  border-radius: 16px;
+  background: #0d2434;
+}
+
+.visual-header {
+  padding: 12px 16px;
+  border-bottom: 1px solid #31576a;
+  color: #9fb6c2;
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.visual-floor {
+  position: relative;
+  min-height: 210px;
+  background:
+    linear-gradient(45deg, #17394a 25%, transparent 25%) 0 0 / 32px 32px,
+    linear-gradient(-45deg, #17394a 25%, transparent 25%) 0 0 / 32px 32px,
+    #102d40;
+}
+
+.visual-hazard,
+.visual-exit,
+.visual-muster {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 10px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.visual-hazard {
+  top: 58px;
+  left: 38%;
+  width: 100px;
+  height: 78px;
+  border: 3px solid #e25d43;
+  background: #572a25;
+  color: #ffad5c;
+  animation: hazardPulse 2s ease-in-out infinite;
+}
+
+.visual-hazard span {
+  font-size: 9px;
+  color: #ff8070;
+}
+
+.visual-exit {
+  top: 22px;
+  width: 86px;
+  height: 42px;
+}
+
+.safe-exit {
+  left: 20px;
+  border: 2px solid #5adc97;
+  background: #164b3b;
+  color: #5adc97;
+}
+
+.blocked-exit {
+  right: 20px;
+  border: 2px solid #ff6b5f;
+  background: #542a2b;
+  color: #ff8b80;
+}
+
+.visual-muster {
+  bottom: 18px;
+  left: 38%;
+  width: 120px;
+  height: 38px;
+  border: 2px solid #19c6b7;
+  background: #124954;
+  color: #19c6b7;
+}
+
+@keyframes hazardPulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 rgba(226, 93, 67, 0);
+  }
+
+  50% {
+    box-shadow: 0 0 22px rgba(226, 93, 67, 0.65);
+  }
+}
