@@ -135,3 +135,69 @@ body,
 .correct-answer {
   color: #5adc97 !important;
 }
+.hamburger-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 8px;
+}
+.hamburger-btn span {
+  width: 24px;
+  height: 2px;
+  background: white;
+  display: block;
+}
+
+.menu-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 90;
+}
+
+.menu-panel {
+  position: fixed;
+  top: 0;
+  right: -300px;
+  width: 280px;
+  height: 100%;
+  background: #1A1D21;
+  border-left: 1px solid rgba(255,255,255,0.1);
+  padding: 24px;
+  z-index: 100;
+  transition: right 0.3s ease;
+}
+.menu-panel.menu-open {
+  right: 0;
+}
+
+.menu-close {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  margin-bottom: 32px;
+}
+
+.menu-links {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.menu-links button {
+  background: transparent;
+  border: none;
+  color: white;
+  text-decoration: none;
+  font-size: 16px;
+  text-align: left;
+  cursor: pointer;
+  padding: 0;
+}
+.menu-links button:hover {
+  color: #4FD1C5;
+}

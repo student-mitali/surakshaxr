@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./App.css";
+import HamburgerMenu from "./HamburgerMenu";
 
 const briefingSections = [
   {
@@ -412,6 +413,7 @@ function App() {
           <span className="online-dot"></span>
           Prototype mode
         </div>
+        <HamburgerMenu setScreen={setScreen} />
       </header>
 
       <main className="page-content" key={screen}>
