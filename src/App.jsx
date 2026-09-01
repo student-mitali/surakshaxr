@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./App.css";
 import HamburgerMenu from "./HamburgerMenu";
 
@@ -107,6 +107,123 @@ const scenarioSteps = [
       "Remain at the muster point until the responsible supervisor gives further instructions."
   }
 ];
+function CameraPreview() {
+  const videoRef = useRef(null);
+  const streamRef = useRef(null);
+
+  const [cameraState, setCameraState] = useState("idle");
+  const [cameraError, setCameraError] = useState("");
+
+  async function startCamera() {
+    setCameraError("");
+
+    if (!navigator.mediaDevices?.getUserMedia) {
+      setCameraState("error");
+      setCameraError("Camera access is not available in this browser.");
+      return;
+    }
+
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: true,
+        audio: false
+      });
+
+      streamRef.current = stream;
+
+      if (videoRef.current) {
+        videoRef.current.srcObject = stream;
+      }
+
+      setCameraState("active");
+    } catch (error) {
+      setCameraState("error");
+      setCameraError("Camera permission was denied or the camera is unavailable.");
+    }
+  }
+
+  function stopCamera() {
+    if (streamRef.current) {
+      streamRef.current.getTracks().forEach((track) => track.stop());
+      streamRef.current = null;
+    }
+
+    if (videoRef.current) {
+      videoRef.current.srcObject = null;
+    }
+
+    setCameraState("idle");
+  }
+
+  useEffect(() => {
+    return () => {
+      if (streamRef.current) {
+        streamRef.current.getTracks().forEach((track) => track.stop());
+      }
+    };
+  }, []);
+
+  return (
+    <div className="camera-panel">
+      <div className="camera-panel-header">
+        <span>LIVE CAMERA / AR PREVIEW</span>
+        <span>
+          {cameraState === "active" ? "LIVE" : "READY"}
+        </span>
+      </div>
+
+      <div className="camera-stage">
+        <video
+          ref={videoRef}
+          className="camera-video"
+          autoPlay
+          muted
+          playsInline
+        >        </video>
+
+        {cameraState === "active" && (
+          <div className="camera-overlay">
+            <div className="ar-tag ar-hazard-tag">
+              <span>HAZARD</span>
+              FIRE ZONE
+            </div>
+
+            <div className="ar-tag ar-safe-tag">
+              SAFE EXIT A
+            </div>
+
+            <div className="ar-tag ar-blocked-tag">
+              BLOCKED EXIT
+            </div>
+
+            <div className="ar-tag ar-muster-tag">
+              MUSTER POINT
+            </div>
+          </div>
+        )}
+
+        {cameraState !== "active" && (
+          <div className="camera-placeholder">
+            <strong>Camera preview ready</strong>
+            <p>Click the button below to start the camera.</p>
+          </div>
+        )}
+      </div>
+
+      {cameraState !== "active" ? (
+        <button className="primary-button" onClick={startCamera}>
+          Start camera
+        </button>
+      ) : (
+        <button className="camera-stop" onClick={stopCamera}>
+          Stop camera
+        </button>
+      )}
+
+      {cameraError && <p className="camera-error">{cameraError}</p>}
+    </div>
+  );
+}
 
 function App() {
   const [screen, setScreen] = useState("home");
@@ -300,32 +417,11 @@ function App() {
               width: `${((stepIndex + 1) / scenarioSteps.length) * 100}%`
             }}
           ></div>
-        </div>
-        <div className="scenario-visual">
-  <div className="visual-header">
-    INDUSTRIAL WORK AREA / SIMULATION
-  </div>
+                </div>
 
-  <div className="visual-floor">
-    <div className="visual-hazard">
-      <span>HAZARD</span>
-      FIRE ZONE
-    </div>
+        <CameraPreview />
 
-    <div className="visual-exit safe-exit">
-      SAFE EXIT A
-    </div>
-
-    <div className="visual-exit blocked-exit">
-      BLOCKED EXIT
-    </div>
-
-    <div className="visual-muster">
-      MUSTER POINT
-    </div>
-  </div>
-</div>
-
+        
         <div className="scenario-context">
           <span>INCIDENT SCENARIO</span>
 
