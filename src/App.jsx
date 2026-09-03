@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import "./App.css";
 import HamburgerMenu from "./HamburgerMenu";
+import FireScenario from "./FireScenario";
 
 const briefingSections = [
   {
@@ -100,13 +101,15 @@ const scenarioSteps = [
       "Return to the work area",
       "Move to another location without informing anyone"
     ],
-    correct: "Remain at the muster point and provide the required information",
+    correct:
+      "Remain at the muster point and provide the required information",
     points: 20,
     critical: false,
     explanation:
       "Remain at the muster point until the responsible supervisor gives further instructions."
   }
 ];
+
 function CameraPreview() {
   const videoRef = useRef(null);
   const streamRef = useRef(null);
@@ -138,7 +141,9 @@ function CameraPreview() {
       setCameraState("active");
     } catch (error) {
       setCameraState("error");
-      setCameraError("Camera permission was denied or the camera is unavailable.");
+      setCameraError(
+        "Camera permission was denied or the camera is unavailable."
+      );
     }
   }
 
@@ -165,6 +170,7 @@ function CameraPreview() {
 
   return (
     <div className="camera-panel">
+
       <div className="camera-panel-header">
         <span>LIVE CAMERA / AR PREVIEW</span>
         <span>
@@ -173,54 +179,52 @@ function CameraPreview() {
       </div>
 
       <div className="camera-stage">
+
         <video
           ref={videoRef}
           className="camera-video"
           autoPlay
           muted
           playsInline
-        >        </video>
+        />
 
-        {cameraState === "active" && (
-          <div className="camera-overlay">
-            <div className="ar-tag ar-hazard-tag">
-              <span>HAZARD</span>
-              FIRE ZONE
-            </div>
-
-            <div className="ar-tag ar-safe-tag">
-              SAFE EXIT A
-            </div>
-
-            <div className="ar-tag ar-blocked-tag">
-              BLOCKED EXIT
-            </div>
-
-            <div className="ar-tag ar-muster-tag">
-              MUSTER POINT
-            </div>
-          </div>
-        )}
+        <FireScenario
+          cameraActive={cameraState === "active"}
+        />
 
         {cameraState !== "active" && (
           <div className="camera-placeholder">
             <strong>Camera preview ready</strong>
-            <p>Click the button below to start the camera.</p>
+            <p>
+              Click the button below to start the camera.
+            </p>
           </div>
         )}
+
       </div>
 
       {cameraState !== "active" ? (
-        <button className="primary-button" onClick={startCamera}>
+        <button
+          className="primary-button"
+          onClick={startCamera}
+        >
           Start camera
         </button>
       ) : (
-        <button className="camera-stop" onClick={stopCamera}>
+        <button
+          className="camera-stop"
+          onClick={stopCamera}
+        >
           Stop camera
         </button>
       )}
 
-      {cameraError && <p className="camera-error">{cameraError}</p>}
+      {cameraError && (
+        <p className="camera-error">
+          {cameraError}
+        </p>
+      )}
+
     </div>
   );
 }
@@ -261,11 +265,15 @@ function App() {
     setAnswers(updatedAnswers);
 
     if (stepIndex === scenarioSteps.length - 1) {
-      const finalScore = updatedAnswers.reduce((total, answer, index) => {
-        return answer.correct
-          ? total + scenarioSteps[index].points
-          : total;
-      }, 0);
+
+      const finalScore = updatedAnswers.reduce(
+        (total, answer, index) => {
+          return answer.correct
+            ? total + scenarioSteps[index].points
+            : total;
+        },
+        0
+      );
 
       const criticalErrors = updatedAnswers.filter(
         (answer) => !answer.correct && answer.critical
@@ -286,6 +294,7 @@ function App() {
       );
 
       setScreen("result");
+
     } else {
       setStepIndex(stepIndex + 1);
     }
@@ -300,52 +309,80 @@ function App() {
 
   let content;
 
+  /* ================= HOME ================= */
+
   if (screen === "home") {
     content = (
       <section className="hero-grid">
-        <div className="hero-copy">
-          <p className="eyebrow">SURAKSHAXR TRAINING PLATFORM</p>
 
-          <h1>Industrial safety training for better emergency decisions.</h1>
+        <div className="hero-copy">
+
+          <p className="eyebrow">
+            SURAKSHAXR TRAINING PLATFORM
+          </p>
+
+          <h1>
+            Industrial safety training for better emergency decisions.
+          </h1>
 
           <p className="hero-description">
             Learn the essential procedure first. Then complete a realistic
             scenario-based assessment without hints.
           </p>
 
-          <button className="primary-button" onClick={openModule}>
+          <button
+            className="primary-button"
+            onClick={openModule}
+          >
             Open fire evacuation module
           </button>
+
         </div>
 
         <div className="module-preview">
+
           <div className="preview-header">
             <span className="status-dot"></span>
             Training module
           </div>
 
-          <div className="preview-icon">01</div>
+          <div className="preview-icon">
+            01
+          </div>
 
-          <p className="preview-label">FIRE &amp; EVACUATION</p>
+          <p className="preview-label">
+            FIRE &amp; EVACUATION
+          </p>
 
-          <h2>Emergency response fundamentals</h2>
+          <h2>
+            Emergency response fundamentals
+          </h2>
 
           <div className="preview-details">
             <span>5 decisions</span>
             <span>No hints</span>
             <span>Offline ready</span>
           </div>
+
         </div>
+
       </section>
     );
   }
 
+  /* ================= MODULE ================= */
+
   if (screen === "module") {
     content = (
       <section className="content-card">
-        <p className="eyebrow">MODULE 01 / LEARNING BRIEF</p>
 
-        <h1>Fire &amp; Evacuation</h1>
+        <p className="eyebrow">
+          MODULE 01 / LEARNING BRIEF
+        </p>
+
+        <h1>
+          Fire &amp; Evacuation
+        </h1>
 
         <p className="large-text">
           Review the complete safety brief before starting the assessment.
@@ -353,193 +390,340 @@ function App() {
         </p>
 
         <div className="language-box">
-          <label htmlFor="language">Training language</label>
+
+          <label htmlFor="language">
+            Training language
+          </label>
 
           <select
             id="language"
             value={language}
-            onChange={(event) => setLanguage(event.target.value)}
+            onChange={(event) =>
+              setLanguage(event.target.value)
+            }
           >
             <option>English</option>
             <option>Hindi</option>
             <option>Santali</option>
           </select>
+
         </div>
 
         <div className="brief-list">
+
           {briefingSections.map((section) => (
-            <div className="brief-item" key={section.number}>
-              <span className="brief-number">{section.number}</span>
+            <div
+              className="brief-item"
+              key={section.number}
+            >
+
+              <span className="brief-number">
+                {section.number}
+              </span>
 
               <div>
-                <strong>{section.title}</strong>
-                <p>{section.text}</p>
+                <strong>
+                  {section.title}
+                </strong>
+
+                <p>
+                  {section.text}
+                </p>
               </div>
+
             </div>
           ))}
+
         </div>
 
         <div className="safety-note">
-          <span>ASSESSMENT RULE</span>
+
+          <span>
+            ASSESSMENT RULE
+          </span>
 
           <p>
-            You must make five decisions in one emergency scenario. A critical
-            unsafe decision may require retraining.
+            You must make five decisions in one emergency scenario.
+            A critical unsafe decision may require retraining.
           </p>
+
         </div>
 
-        <button className="primary-button" onClick={startAssessment}>
+        <button
+          className="primary-button"
+          onClick={startAssessment}
+        >
           I have reviewed the brief — start assessment
         </button>
+
       </section>
     );
   }
 
+  /* ================= ASSESSMENT ================= */
+
   if (screen === "assessment") {
     content = (
       <section className="content-card">
+
         <div className="assessment-header">
+
           <div>
-            <p className="eyebrow">ASSESSMENT MODE</p>
+
+            <p className="eyebrow">
+              ASSESSMENT MODE
+            </p>
 
             <span>
-              Decision {stepIndex + 1} of {scenarioSteps.length}
+              Decision {stepIndex + 1} of{" "}
+              {scenarioSteps.length}
             </span>
+
           </div>
 
-          <span className="no-hints">NO HINTS</span>
+          <span className="no-hints">
+            NO HINTS
+          </span>
+
         </div>
 
         <div className="progress-track">
+
           <div
             className="progress-fill assessment-fill"
             style={{
-              width: `${((stepIndex + 1) / scenarioSteps.length) * 100}%`
+              width: `${
+                ((stepIndex + 1) /
+                  scenarioSteps.length) *
+                100
+              }%`
             }}
           ></div>
-                </div>
+
+        </div>
+
+        {/* CAMERA */}
 
         <CameraPreview />
 
-        
+        {/* SCENARIO */}
+
         <div className="scenario-context">
-          <span>INCIDENT SCENARIO</span>
+
+          <span>
+            INCIDENT SCENARIO
+          </span>
 
           <p>
-            Smoke and flames have been observed near industrial equipment
-            during a work shift. The emergency response is in progress.
+            Smoke and flames have been observed near
+            industrial equipment during a work shift.
+            The emergency response is in progress.
           </p>
+
         </div>
 
+        {/* MCQ */}
+
         <h1 className="assessment-question">
-  {currentStep.question}
-</h1>
+          {currentStep.question}
+        </h1>
 
         <div className="answer-list">
+
           {currentStep.options.map((option) => (
+
             <button
               className="answer-button"
               key={option}
               onClick={() => chooseAnswer(option)}
             >
+
               <span className="answer-marker"></span>
+
               {option}
+
             </button>
+
           ))}
+
         </div>
+
       </section>
     );
   }
+
+  /* ================= RESULT ================= */
 
   if (screen === "result") {
     content = (
       <section className="content-card result-card">
-        <p className="eyebrow">ASSESSMENT COMPLETE</p>
 
-        <h1>Your training result</h1>
+        <p className="eyebrow">
+          ASSESSMENT COMPLETE
+        </p>
 
-        <div className="result-score">{result?.score}%</div>
+        <h1>
+          Your training result
+        </h1>
+
+        <div className="result-score">
+          {result?.score}%
+        </div>
 
         <div className="result-summary">
+
           <div>
-            <span>Critical errors</span>
-            <strong>{result?.criticalErrors}</strong>
+            <span>
+              Critical errors
+            </span>
+
+            <strong>
+              {result?.criticalErrors}
+            </strong>
           </div>
 
           <div>
-            <span>Language</span>
-            <strong>{result?.language}</strong>
+            <span>
+              Language
+            </span>
+
+            <strong>
+              {result?.language}
+            </strong>
           </div>
+
         </div>
 
         <p className="large-text">
+
           {result?.criticalErrors === 0
             ? "You completed the scenario without a critical error."
             : "Review the corrections below before attempting the assessment again."}
+
         </p>
 
-        <h2 className="review-heading">Decision Review</h2>
+        <h2 className="review-heading">
+          Decision Review
+        </h2>
 
         <div className="review-list">
+
           {answers.map((answer, index) => {
-            const question = scenarioSteps[index];
+
+            const question =
+              scenarioSteps[index];
 
             return (
               <div
                 className={`review-item ${
-                  answer.correct ? "review-correct" : "review-wrong"
+                  answer.correct
+                    ? "review-correct"
+                    : "review-wrong"
                 }`}
                 key={index}
               >
+
                 <h3>
+
                   Decision {index + 1}{" "}
-                  {answer.correct ? "✓ Correct" : "✕ Needs correction"}
+
+                  {answer.correct
+                    ? "✓ Correct"
+                    : "✕ Needs correction"}
+
                 </h3>
 
                 <p>
-                  <strong>Your choice:</strong> {answer.selected}
+                  <strong>
+                    Your choice:
+                  </strong>{" "}
+                  {answer.selected}
                 </p>
 
                 {!answer.correct && (
                   <p className="correct-answer">
-                    <strong>Correct action:</strong> {question.correct}
+
+                    <strong>
+                      Correct action:
+                    </strong>{" "}
+
+                    {question.correct}
+
                   </p>
                 )}
 
                 <p>
-                  <strong>Explanation:</strong> {answer.explanation}
+
+                  <strong>
+                    Explanation:
+                  </strong>{" "}
+
+                  {answer.explanation}
+
                 </p>
+
               </div>
             );
+
           })}
+
         </div>
 
-        <button className="primary-button" onClick={returnHome}>
+        <button
+          className="primary-button"
+          onClick={returnHome}
+        >
           Return to home
         </button>
+
       </section>
     );
   }
 
+  /* ================= APP ================= */
+
   return (
     <div className="app-shell">
+
       <header className="topbar">
-        <button className="brand-button" onClick={returnHome}>
-          <span className="brand-mark">S</span>
-          <span>SurakshaXR</span>
+
+        <button
+          className="brand-button"
+          onClick={returnHome}
+        >
+
+          <span className="brand-mark">
+            S
+          </span>
+
+          <span>
+            SurakshaXR
+          </span>
+
         </button>
 
         <div className="topbar-status">
+
           <span className="online-dot"></span>
+
           Prototype mode
+
         </div>
-        <HamburgerMenu setScreen={setScreen} />
+
+        <HamburgerMenu
+          setScreen={setScreen}
+        />
+
       </header>
 
-      <main className="page-content" key={screen}>
-  {content}
-</main>
-</div>
+      <main
+        className="page-content"
+        key={screen}
+      >
+        {content}
+      </main>
+
+    </div>
   );
 }
 
