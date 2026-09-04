@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FIRELINE — Mining Fire Emergency Drill</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+</head>
+<body>
+<div id="app">
+
+  <div class="scene" id="scene">
+    <svg viewBox="0 0 1000 560" preserveAspectRatio="xMidYMax slice" id="backdrop"></svg>
+    <div class="strobe" id="strobe"></div>
+    <div id="fireLayer"></div>
+    <div id="smokeLayer"></div>
+    <div id="hotspotLayer"></div>
+
+    <div class="hud-top">
+      <div class="title-block">
+        <h1>⚠ FIRE EMERGENCY</h1>
+        <p id="locLabel">Mining Industry — Underground Conveyor Bay, Jharkhand</p>
+      </div>
+      <div class="timer" id="timer">00:24</div>
+    </div>
+
+    <div class="panel" id="taskPanel"></div>
+    <div class="pass-panel" id="passPanel" style="display:none;"></div>
+    <div class="toast" id="toast"></div>
+  </div>
+
+  <div class="steps" id="stepTracker"></div>
+
+  <div class="intro" id="intro">
+    <div class="intro-card">
+      <div class="tag">FIRELINE — EMERGENCY RESPONSE DRILL</div>
+      <h1>You're on shift when the alarm-worthy moment hits.</h1>
+      <p>A fire has started near the conveyor equipment in your work area. This is a live decision simulation — every action has a consequence, and there are no hints. Read the scene, decide fast, act correctly.</p>
+      <div class="rule"><span class="n">01</span><span>Each decision is timed. Hesitating has consequences, same as choosing wrong.</span></div>
+      <div class="rule"><span class="n">02</span><span>Watch the scene, not just the buttons — smoke direction and fire size matter.</span></div>
+      <div class="rule"><span class="n">03</span><span>You'll be scored on correct-first-try decisions and total response time.</span></div>
+      <button class="begin-btn" id="beginBtn">Start the drill →</button>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
